@@ -95,17 +95,17 @@ jobs:
         name: Checkout Hackers Web
         id: checkout-hackers-web
         with:
-          repository: TARGET_ORG/PROJECT_NAME-web
+          repository: shozab-unify-examples/fidelity-web
       - uses: https://github.com/cloudbees-io/checkout@v1
         name: Checkout Hackers Auth
         id: checkout-hackers-auth
         with:
-          repository: TARGET_ORG/PROJECT_NAME-auth
+          repository: shozab-unify-examples/fidelity-auth
       - uses: https://github.com/cloudbees-io/checkout@v1
         name: Checkout Hackers API
         id: checkout-hackers-api
         with:
-          repository: TARGET_ORG/PROJECT_NAME-api
+          repository: shozab-unify-examples/fidelity-api
       - name: Format issues as table
         uses: docker://alpine:3.19
         id: format-issues
@@ -318,14 +318,14 @@ jobs:
   deploy-to-qa:
     needs:
       - approval
-    uses: TARGET_ORG/PROJECT_NAME-app/.cloudbees/workflows/deployer.yaml
+    uses: shozab-unify-examples/fidelity-app/.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
-      environment: PROJECT_NAME-qa
+      environment: fidelity-qa
     secrets: inherit
     vars: inherit
   enable-feature-flags-qa:
-    environment: PROJECT_NAME-qa
+    environment: fidelity-qa
     needs:
       - deploy-to-qa
     steps:
@@ -334,9 +334,9 @@ jobs:
         id: config-update
         with:
           token: ${{ secrets.UNIFY_TOKEN }}
-          org-id: "REPLACE_ME_ORG_ID"
-          application-name: PROJECT_NAME-app
-          environment-name: PROJECT_NAME-qa
+          org-id: "4cf07b75-de8a-4b18-9317-61b1b60dc2ea"
+          application-name: fidelity-app
+          environment-name: fidelity-qa
           flag-name: default.score
           use-org-as-app: false
           flag-config: |
@@ -359,7 +359,7 @@ jobs:
             ✅ Flag configuration update successful
           format: MARKDOWN
   run-tests-qa:
-    environment: PROJECT_NAME-qa
+    environment: fidelity-qa
     needs:
       - enable-feature-flags-qa
     outputs:
@@ -497,7 +497,7 @@ jobs:
             **QA Test Gate**: PASSED - Ready for staging
           format: MARKDOWN
   exit-criteria-qa:
-    environment: PROJECT_NAME-qa
+    environment: fidelity-qa
     needs:
       - run-tests-qa
     outputs:
@@ -652,14 +652,14 @@ jobs:
   deploy-to-staging:
     needs:
       - release-manager-approval
-    uses: TARGET_ORG/PROJECT_NAME-app/.cloudbees/workflows/deployer.yaml
+    uses: shozab-unify-examples/fidelity-app/.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
-      environment: PROJECT_NAME-staging
+      environment: fidelity-staging
     secrets: inherit
     vars: inherit
   enable-feature-flags-staging:
-    environment: PROJECT_NAME-staging
+    environment: fidelity-staging
     needs:
       - deploy-to-staging
     steps:
@@ -668,9 +668,9 @@ jobs:
         id: config-update
         with:
           token: ${{ secrets.UNIFY_TOKEN }}
-          org-id: "REPLACE_ME_ORG_ID"
-          application-name: PROJECT_NAME-app
-          environment-name: PROJECT_NAME-staging
+          org-id: "4cf07b75-de8a-4b18-9317-61b1b60dc2ea"
+          application-name: fidelity-app
+          environment-name: fidelity-staging
           flag-name: default.score
           use-org-as-app: false
           flag-config: |
@@ -693,7 +693,7 @@ jobs:
             ✅ Flag configuration update successful
           format: MARKDOWN
   run-tests-staging:
-    environment: PROJECT_NAME-staging
+    environment: fidelity-staging
     needs:
       - enable-feature-flags-staging
     outputs:
@@ -848,7 +848,7 @@ jobs:
             **Staging Gate**: PASSED - Ready for production consideration
           format: MARKDOWN
   exit-criteria-staging:
-    environment: PROJECT_NAME-staging
+    environment: fidelity-staging
     needs:
       - run-tests-staging
     outputs:
@@ -1015,14 +1015,14 @@ jobs:
   deploy-to-prod:
     needs:
       - wait-for-snow-change-request
-    uses: TARGET_ORG/PROJECT_NAME-app/.cloudbees/workflows/deployer.yaml
+    uses: shozab-unify-examples/fidelity-app/.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
-      environment: PROJECT_NAME-prod
+      environment: fidelity-prod
     secrets: inherit
     vars: inherit
   run-smoke-tests:
-    environment: PROJECT_NAME-prod
+    environment: fidelity-prod
     needs:
       - deploy-to-prod
     outputs:
@@ -1193,7 +1193,7 @@ jobs:
             **Production Smoke Tests**: PASSED - System ready for traffic
           format: MARKDOWN
   roll-out-feature-flags:
-    environment: PROJECT_NAME-prod
+    environment: fidelity-prod
     needs:
       - run-smoke-tests
     steps:
@@ -1213,9 +1213,9 @@ jobs:
         id: config-update
         with:
           token: ${{ secrets.UNIFY_TOKEN }}
-          org-id: "REPLACE_ME_ORG_ID"
-          application-name: PROJECT_NAME-app
-          environment-name: PROJECT_NAME-prod
+          org-id: "4cf07b75-de8a-4b18-9317-61b1b60dc2ea"
+          application-name: fidelity-app
+          environment-name: fidelity-prod
           flag-name: default.score
           use-org-as-app: false
           flag-config: |
