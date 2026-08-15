@@ -13,17 +13,11 @@ on:
         required: true
 
 jobs:
-
-  # ============================================================
-  # HACKERS API
-  # ============================================================
-
   hackers-api:
     if: ${{ fromJSON(inputs.manifest)['fidelity-api']['hackers-api'].deploy }}
-
     steps:
       - name: Simulate hackers-api deployment
-        kind: deploy
+        uses: docker://alpine:3.20
         run: |
           echo "========================================"
           echo "HACKERS API DEPLOYMENT"
@@ -33,12 +27,12 @@ jobs:
           echo "Artifact ID: ${{ fromJSON(inputs.manifest)['fidelity-api']['hackers-api'].id }}"
           echo "Artifact URL: ${{ fromJSON(inputs.manifest)['fidelity-api']['hackers-api'].url }}"
           echo
-          echo "Starting deployment simulation..."
+          echo "Starting simulated deployment..."
           sleep 5
-          echo
           echo "Deployment simulation completed successfully."
 
       - name: Register hackers-api deployment
+        kind: deploy
         uses: cloudbees-io/register-deployed-artifact@v2
         with:
           artifact-id: ${{ fromJSON(inputs.manifest)['fidelity-api']['hackers-api'].id }}
@@ -60,24 +54,16 @@ jobs:
             - **Environment registration:** `COMPLETED`
             - **Deployment mode:** `SIMULATED`
 
-            The artifact was successfully registered as deployed to the
-            target CloudBees Unify environment.
+            The artifact was registered as deployed to the target CloudBees Unify environment.
 
-            This demonstration records deployment activity and environment
-            inventory without claiming that a live Kubernetes workload was started.
+            This demonstration records deployment activity and environment inventory without claiming that a live Kubernetes workload was started.
           format: MARKDOWN
-
-
-  # ============================================================
-  # HACKERS AUTH
-  # ============================================================
 
   hackers-auth:
     if: ${{ fromJSON(inputs.manifest)['fidelity-auth']['hackers-auth'].deploy }}
-
     steps:
       - name: Simulate hackers-auth deployment
-        kind: deploy
+        uses: docker://alpine:3.20
         run: |
           echo "========================================"
           echo "HACKERS AUTH DEPLOYMENT"
@@ -87,12 +73,12 @@ jobs:
           echo "Artifact ID: ${{ fromJSON(inputs.manifest)['fidelity-auth']['hackers-auth'].id }}"
           echo "Artifact URL: ${{ fromJSON(inputs.manifest)['fidelity-auth']['hackers-auth'].url }}"
           echo
-          echo "Starting deployment simulation..."
+          echo "Starting simulated deployment..."
           sleep 5
-          echo
           echo "Deployment simulation completed successfully."
 
       - name: Register hackers-auth deployment
+        kind: deploy
         uses: cloudbees-io/register-deployed-artifact@v2
         with:
           artifact-id: ${{ fromJSON(inputs.manifest)['fidelity-auth']['hackers-auth'].id }}
@@ -114,24 +100,16 @@ jobs:
             - **Environment registration:** `COMPLETED`
             - **Deployment mode:** `SIMULATED`
 
-            The artifact was successfully registered as deployed to the
-            target CloudBees Unify environment.
+            The artifact was registered as deployed to the target CloudBees Unify environment.
 
-            This demonstration records deployment activity and environment
-            inventory without claiming that a live Kubernetes workload was started.
+            This demonstration records deployment activity and environment inventory without claiming that a live Kubernetes workload was started.
           format: MARKDOWN
-
-
-  # ============================================================
-  # HACKERS WEB
-  # ============================================================
 
   hackers-web:
     if: ${{ fromJSON(inputs.manifest)['fidelity-web']['hackers-web'].deploy }}
-
     steps:
       - name: Simulate hackers-web deployment
-        kind: deploy
+        uses: docker://alpine:3.20
         run: |
           echo "========================================"
           echo "HACKERS WEB DEPLOYMENT"
@@ -141,12 +119,12 @@ jobs:
           echo "Artifact ID: ${{ fromJSON(inputs.manifest)['fidelity-web']['hackers-web'].id }}"
           echo "Artifact URL: ${{ fromJSON(inputs.manifest)['fidelity-web']['hackers-web'].url }}"
           echo
-          echo "Starting deployment simulation..."
+          echo "Starting simulated deployment..."
           sleep 5
-          echo
           echo "Deployment simulation completed successfully."
 
       - name: Register hackers-web deployment
+        kind: deploy
         uses: cloudbees-io/register-deployed-artifact@v2
         with:
           artifact-id: ${{ fromJSON(inputs.manifest)['fidelity-web']['hackers-web'].id }}
@@ -168,9 +146,7 @@ jobs:
             - **Environment registration:** `COMPLETED`
             - **Deployment mode:** `SIMULATED`
 
-            The artifact was successfully registered as deployed to the
-            target CloudBees Unify environment.
+            The artifact was registered as deployed to the target CloudBees Unify environment.
 
-            This demonstration records deployment activity and environment
-            inventory without claiming that a live Kubernetes workload was started.
+            This demonstration records deployment activity and environment inventory without claiming that a live Kubernetes workload was started.
           format: MARKDOWN
