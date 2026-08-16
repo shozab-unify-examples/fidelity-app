@@ -18,7 +18,8 @@ metadata:
       jobs:
         - create-release-issue
         - gather-evidence
-        - quality-checks
+        - Evaluate production coverage policy
+        - Publish production coverage policy evidence
         - update-jira-tickets
         - approval
     - name: Quality Assurance
