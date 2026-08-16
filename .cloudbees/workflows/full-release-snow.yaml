@@ -240,6 +240,15 @@ jobs:
 
 
           
+      - name: Code Analysis
+        id: code-analysis
+        uses: docker://alpine:3.20
+        run: |
+          # Simulate code-quality analysis
+          QUALITY_SCORE=94
+          echo "Code quality score: ${QUALITY_SCORE}/100"
+          echo "$QUALITY_SCORE" > $CLOUDBEES_OUTPUTS/quality-score
+
       - name: Dependency Vulnerability Check
         id: dependency-check
         uses: docker://node:22-alpine
